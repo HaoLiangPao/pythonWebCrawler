@@ -18,15 +18,16 @@ import sqlite3
 def main():
     baseUrl = "https://movie.douban.com/top250?start="
     # Save data into excel file first
-    dbPath = ".\\doubanMovieTop250.xls"
+    dbPath = u".\doubanMovieTop250.xls"
 
     # 1. Web Crawling
     dataList = getData(baseUrl)
     # 2. Data Analyzing
     # 3. Data Storage
-    saveData(dbPath)
+    saveData(dataList, dbPath)
 
 
+# RX Pattern Defined
 # Example Element: <a class="" href="https://movie.douban.com/subject/3319755/">
 linkPattern = re.compile(r'<a href="(.*)?">')
 imgPattern = re.compile(f'<img.*src="(.*)?" w', re.S)  # Include line break char
@@ -110,9 +111,21 @@ def addMovieElement(findings, data):
         data.append("")
     return data
 
+
 # Data Storage
-def saveData(dbPath):
+def saveData(dataList, dbPath):
     print("Saving...")
+    book = xlwt.Workbook(encoding="utf-8", style_compression=0)
+    sheet = book.add_sheet("豆瓣电影TOP250", cell_overwrite_ok=True)
+    col = ("电影详情链接", "图片链接", "中文名", "原名", "别名", "评分", "评价数", "引用", "团队", "类型")
+    # Table Title added
+    for i in range(len(col)):
+        sheet.write(0, i, col[i])
+    for i in range(len(dataList)):
+        movie = dataList[i]
+        for j in range(len(movie)):
+            sheet.write(i + 1, j, movie[j])
+    book.save("豆瓣电影TOP250.xls")
 
 
 # Helper Functions
