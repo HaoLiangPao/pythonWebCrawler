@@ -27,6 +27,8 @@ def main():
     saveData(dbPath)
 
 
+
+
 # Web Crawling
 def getData(baseUrl):
     dataList = []
@@ -34,6 +36,7 @@ def getData(baseUrl):
     for i in range(0, 10):  # Get 10 pages of info (25 movies per page)
         html = askURL(baseUrl + i * 25)
         # 逐一解析数据
+
     return dataList
 
 
