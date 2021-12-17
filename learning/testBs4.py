@@ -7,7 +7,7 @@
 from bs4 import BeautifulSoup
 import re
 
-file = open("./Google.html", "rb")
+file = open("Google.html", "rb")
 html = file.read()
 bs = BeautifulSoup(html, "html.parser")
 
