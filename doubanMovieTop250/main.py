@@ -4,20 +4,22 @@
 # @File : main.py
 # @Software: PyCharm
 
-from doubanMovieTop250.dataCollection import getData
-from doubanMovieTop250.dataStorage import saveData
+import doubanMovieTop250.dataCollection as dataCollection
+import doubanMovieTop250.dataStorage as dataStorage
 
 
 def main():
     baseUrl = "https://movie.douban.com/top250?start="
     # Save data into excel file first
-    dbPath = u".\doubanMovieTop250.xls"
+    # dbPathExcel = u"doubanMovieTop250.xls"
+    dbPathSQLite = u"doubanMovieTop250-test.db"
 
     # 1. Web Crawling
-    dataList = getData(baseUrl)
+    dataList = dataCollection.getData(baseUrl)
     # 2. Data Analyzing
     # 3. Data Storage
-    saveData(dataList, dbPath)
+    # dataStorage.saveDataExcel(dataList, dbPathExcel)  # Save to a excel file
+    dataStorage.saveDaveSQLite(dataList, dbPathSQLite)  # Save to a Sqlite DB file
 
 
 if __name__ == "__main__":

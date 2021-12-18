@@ -10,6 +10,7 @@ import re
 import urllib.error
 import urllib.request
 from bs4 import BeautifulSoup
+from datetime import date, datetime, time
 
 # Regex Patterns
 # RX Pattern Defined
@@ -29,13 +30,13 @@ relativeInfoPattern = re.compile(r'<p class="">(.*?)</p>', re.S)
 def getData(baseUrl):
     """
     Get the original web page information
-
-    Parameters:
+    :parameter
         baseUrl (str): The base url the crawler is about to fetch
-
-    Returns:
+    :return
         dataList (array): The web page info fetched.
     """
+    # Running log preparation
+    startTime = datetime.now()
     dataList = []
     # Data Analyzing (Step by step)
     for i in range(0, 10):  # Get 10 pages of info (25 movies per page)
@@ -94,18 +95,22 @@ def getData(baseUrl):
             data.append(category)
             # Add one page of movies to the whole dataList
             dataList.append(data)
+    # Function running status Log
+    endTime = datetime.now()
+    print(len(dataList), "records collected in", endTime - startTime)
     return dataList
+
+
+# --------------------------------------------------
 
 
 # Helper Functions
 def askURL(url):
     """
     Get the original web page information
-
-    Parameters:
+    :parameter
         url (str):The base url the crawler is about to fetch
-
-    Returns:
+    :return
         (str1):The web page info fetched.
     """
     head = {
